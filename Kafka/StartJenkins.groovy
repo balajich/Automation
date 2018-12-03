@@ -1,6 +1,15 @@
 node{
 stage('Start Zookeeper'){
-sh '''cd /usr/local/bin/kafka
-bin/zookeeper-server-start.sh config/zookeeper.properties'''
-}
+             withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
+                    sh '''cd /home/mario/soft/kafka
+                          nohup bin/zookeeper-server-start.sh config/zookeeper.properties & '''
+                }
+            }
+stage('Start Cluster0'){
+             withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
+                    sh '''cd /home/mario/soft/kafka
+                          nohup  bin/kafka-server-start.sh config/server0.properties & '''
+                }
+            }
+
 }
