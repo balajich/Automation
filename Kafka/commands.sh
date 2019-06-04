@@ -15,7 +15,7 @@
 # Describe topic
 ./bin/kafka-topics.sh --describe --topic thrid_topic --zookeeper localhost:2181
 
-#List topic
+# List all topics
 ./bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 # Producing to kafka topic
