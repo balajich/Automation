@@ -18,6 +18,9 @@
 # List all topics
 ./bin/kafka-topics.sh --list --zookeeper localhost:2181
 
+# Delete topic
+./bin/kafka-topics.sh --delete --topic first_topic --zookeeper localhost:2181
+
 # Producing to kafka topic
 ./bin/kafka-console-producer.sh \
     --broker-list 127.0.0.1:9092 --topic first_topic
@@ -25,4 +28,30 @@
 # Console producer with all acks
 ./bin/kafka-console-producer.sh \
     --broker-list 127.0.0.1:9092 --topic first_topic \
-	-- producer-property acks=all0
+	-- producer-property acks=all
+
+# Console Consumer to reads from topic
+# it reads from the place where it is started
+./bin/kafka-console-consumer.sh \
+    --bootstrap-server 127.0.0.1:9092 --topic first_topic
+
+# Console consumer read from begining 
+./bin/kafka-console-consumer.sh \
+    --bootstrap-server 127.0.0.1:9092 --topic first_topic --from-beginning
+
+# Console Consumer group
+./bin/kafka-console-consumer.sh \
+    --bootstrap-server 127.0.0.1:9092 --topic fourth_topic --from-beginning --group my-first-consumer-application
+
+# list Consumer groups
+./bin/kafka-consumer-groups.sh \
+    --bootstrap-server 127.0.0.1:9092  --list
+
+# describe Consumer groups
+./bin/kafka-consumer-groups.sh \
+    --bootstrap-server 127.0.0.1:9092  --describe --group my-first-consumer-application
+
+# Restting offsets to read from begining for consumer group
+./bin/kafka-consumer-groups.sh \
+    --bootstrap-server 127.0.0.1:9092   --group my-first-consumer-application \
+    --reset-offsets --to-earliest --execute  --topic first_topic
